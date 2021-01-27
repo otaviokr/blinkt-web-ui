@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Blinkt Configurator</title>
+    <link rel="icon" href="images/favicon.png" />
+
+    <link rel="stylesheet" href="semantic.superhero.min.css">
+</head>
+
+<body>
+    <div class="ui container">
+        <p>
+            <h1 class="ui center aligned header">
+                <i class="circular sun icon"></i>
+                <div class="content">The Blinkt Configurator</div>
+            </h1>
+        </p>
+        <div class="ui icon message">
+            <i class="exclamation icon"></i>
+            <div class="content">
+                <div class="header">Each circle is a LED!</div>
+                <p>This page allows you to set the LEDs on Blinkt on a Raspberry Pi using Go!</p>
+            </div>
+        </div>
+        <form id ="form" class="ui form" action="" method="POST" enctype="application/x-www-form-urlencoded">
+            <div class="ui grid">
+                <div class="row">
+                    <div class="sixteen wide column center aligned ">
+                        <object id="parent_svg" data="/blinkt.svg" type="image/svg+xml">
+                        </object>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="four wide column center aligned ">
+                        <div class="field">
+                            <label>Select color (Black is off)</label>
+                            <input
+                                type="color"
+                                id="colorpicker"
+                                onchange="clickColor(0, -1, -1, 5)"
+                                value="#ff0000" />
+                        </div>
+                    </div>
+                    <div class="two wide column">&nbsp;</div>
+                    <div class="four wide column center aligned ">
+                        <div class="field">
+                            <label>Set brightness</label>
+                            <input type="range" id="bright" name="bright" min="0" max="100" steps="5" />
+                        </div>
+                    </div>
+                    <div class="two wide column center aligned ">&nbsp;</div>
+                    <div class="four wide column">
+                        <p>
+                            <button class="ui button" type="button" onclick="submitColors();">
+                                Update Blinkt!
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div style="display:none;">
+                <div class="field">
+                    <label>L1</label>
+                    <input type="text" id="input_l1" name="input_l1" />
+                </div>
+                <div class="field">
+                    <label>L2</label>
+                    <input type="text" id="input_l2" name="input_l2" />
+                </div>
+                <div class="field">
+                    <label>L3</label>
+                    <input type="text" id="input_l3" name="input_l3" />
+                </div>
+                <div class="field">
+                    <label>L4</label>
+                    <input type="text" id="input_l4" name="input_l4" />
+                </div>
+                <div class="field">
+                    <label>L5</label>
+                    <input type="text" id="input_l5" name="input_l5" />
+                </div>
+                <div class="field">
+                    <label>L6</label>
+                    <input type="text" id="input_l6" name="input_l6" />
+                </div>
+                <div class="field">
+                    <label>L7</label>
+                    <input type="text" id="input_l7" name="input_l7" />
+                </div>
+                <div class="field">
+                    <label>L8</label>
+                    <input type="text" id="input_l8" name="input_l8" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/js/blinkt.js"></script>
+    <script src="https://code.jquery.com/jquery-git.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</body>
+</html>
+
