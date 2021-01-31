@@ -1,5 +1,13 @@
 # blinkt-web-ui
 
+```
+IMPORTANT! This is an early implementation using Alex Ellis's Blinkt lib.
+
+While his lib is perfectly fine, I prefer to use periph.io so it is easier to integrate with other peripherals.
+
+This version is working (and bug-free AFAIK), and you are free to use it, but it will not be improved or enhanced in the future...
+```
+
 A web user interface to change the LEDs configuration in [Pimoroni's Blinkt!](https://shop.pimoroni.com/products/blinkt).
 
 Blinkt! is an array of 8 individually addressable LEDs compatible with Raspberry Pi GPIO.
