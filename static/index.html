@@ -49,7 +49,15 @@
                     <div class="four wide column center aligned ">
                         <div class="field">
                             <label>Set brightness</label>
-                            <input type="range" id="bright" name="bright" min="0" max="100" steps="5" />
+                            <input
+                                type="range"
+                                id="brightSlider"
+                                name="brightSlider"
+                                min="0"
+                                max="100"
+                                steps="5"
+                                oninput="this.nextElementSibling.value = this.value" />
+                            <output id="bright">50</output>
                         </div>
                     </div>
                     <div class="two wide column center aligned ">&nbsp;</div>
@@ -65,35 +73,51 @@
             <div style="display:none;">
                 <div class="field">
                     <label>L1</label>
-                    <input type="text" id="input_l1" name="input_l1" />
+                    <input type="text" value="#000000" id="input_l1" name="input_l1" />
+                    <label>L1 Brightness</label>
+                    <input type="text" value="50" id="input_l1b" name="input_l1b" />
                 </div>
                 <div class="field">
                     <label>L2</label>
-                    <input type="text" id="input_l2" name="input_l2" />
+                    <input type="text" value="#000000" id="input_l2" name="input_l2" />
+                    <label>L1 Brightness</label>
+                    <input type="text" value="50" id="input_l2b" name="input_l2b" />
                 </div>
                 <div class="field">
                     <label>L3</label>
-                    <input type="text" id="input_l3" name="input_l3" />
+                    <input type="text" value="#000000" id="input_l3" name="input_l3" />
+                    <label>L1 Brightness</label>
+                    <input type="text" value="50" id="input_l3b" name="input_l3b" />
                 </div>
                 <div class="field">
                     <label>L4</label>
-                    <input type="text" id="input_l4" name="input_l4" />
+                    <input type="text" value="#000000" id="input_l4" name="input_l4" />
+                    <label>L1 Brightness</label>
+                    <input type="text" value="50" id="input_l4b" name="input_l4b" />
                 </div>
                 <div class="field">
                     <label>L5</label>
-                    <input type="text" id="input_l5" name="input_l5" />
+                    <input type="text" value="#000000" id="input_l5" name="input_l5" />
+                    <label>L1 Brightness</label>
+                    <input type="text" value="50" id="input_l5b" name="input_l5b" />
                 </div>
                 <div class="field">
                     <label>L6</label>
-                    <input type="text" id="input_l6" name="input_l6" />
+                    <input type="text" value="#000000" id="input_l6" name="input_l6" />
+                    <label>L1 Brightness</label>
+                    <input type="text" value="50" id="input_l6b" name="input_l6b" />
                 </div>
                 <div class="field">
                     <label>L7</label>
-                    <input type="text" id="input_l7" name="input_l7" />
+                    <input type="text" value="#000000" id="input_l7" name="input_l7" />
+                    <label>L1 Brightness</label>
+                    <input type="text" value="50" id="input_l7b" name="input_l7b" />
                 </div>
                 <div class="field">
                     <label>L8</label>
-                    <input type="text" id="input_l8" name="input_l8" />
+                    <input type="text" value="#000000" id="input_l8" name="input_l8" />
+                    <label>L1 Brightness</label>
+                    <input type="text" value="50" id="input_l8b" name="input_l8b" />
                 </div>
             </div>
         </form>

@@ -2,16 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/otaviokr/blinkt-web-ui/blinkt"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"regexp"
 	"strconv"
-
-	. "github.com/alexellis/blinkt_go"
 )
 
 var (
-	blinkt Blinkt
+	blinktDev *blinkt.Dev
 )
 
 // ParseColor will convert the hexadecimal in the string into a valid int.
@@ -30,7 +29,7 @@ func ParseColor(c string) int {
 
 // SetPixel will parse the incomming details for a LED (a "pixel") to configure it correctly.
 func SetPixel(led, rgb string) (int, int, int, int) {
-	index, err := strconv.Atoi(led[len(led) - 1:])
+	index, err := strconv.Atoi(led[len(led)-1:])
 	if err != nil {
 		log.WithFields(
 			log.Fields{
@@ -67,53 +66,71 @@ func SetPixel(led, rgb string) (int, int, int, int) {
 func UpdateLed(w http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
 	if err != nil {
-			panic(err)
+		panic(err)
 	}
 
+	p := []blinkt.Pixel{
+		blinkt.Pixel{}, blinkt.Pixel{}, blinkt.Pixel{}, blinkt.Pixel{},
+		blinkt.Pixel{}, blinkt.Pixel{}, blinkt.Pixel{}, blinkt.Pixel{}}
+
 	for name, value := range req.PostForm {
-		if name == "bright" {
-			br, err := strconv.Atoi(value[0])
-			if err != nil {
-				panic(err)
+		if name[:5] == "input" {
+			// Field with name ending with "b" contains brights for that led
+			if name[len(name)-1:] == "b" {
+				br, err := strconv.Atoi(value[0])
+				if err != nil {
+					panic(err)
+				}
+				brightness := float64(br) / 100
+				led, err := strconv.Atoi(name[7:len(name)-1])
+				led -= 1
+				if err != nil {
+					panic(err)
+				}
+				log.WithFields(
+					log.Fields{
+						"led":        led,
+						"brightness": brightness,
+					},
+				).Info("Set new value to brightness to LED")
+				p[led].Brightness = brightness
+			} else {
+				i, r, g, b := SetPixel(name, value[0])
+				log.WithFields(
+					log.Fields{
+						"LedIndex": i,
+						"Red":      r,
+						"Green":    g,
+						"Blue":     b,
+					},
+				).Info("Set new color to LED")
+				p[i].R = r
+				p[i].G = g
+				p[i].B = b
 			}
-			brightness := float64(br)/100
-			log.WithFields(
-				log.Fields{
-					"brightness": brightness,
-				},
-			).Info("Set new value to brightness")
-			blinkt.SetBrightness(brightness)
-		} else {
-			i, r, g, b := SetPixel(name, value[0])
-			log.WithFields(
-				log.Fields{
-					"LedIndex": i,
-					"Red": r,
-					"Green": g,
-					"Blue": b,
-				},
-			).Info("Set new color to LED")
-			blinkt.SetPixel(i, r, g, b)
 		}
 	}
 
-	blinkt.Show()
+	for pi, pd := range p {
+		blinktDev.SetPixelWithBright(pi, pd.R, pd.G, pd.B, pd.Brightness)
+	}
+	blinktDev.Show()
 }
 
 func main() {
 	log.SetFormatter(&log.JSONFormatter{})
 	log.Info("Starting server")
 
-	brightness := 0.125
-	log.WithFields(
-		log.Fields{
-			"brightness": brightness,
-		},
-	).Info("Set default brightness")
+	err := blinkt.Init()
+	if err != nil {
+		panic(err)
+	}
 
-	blinkt = NewBlinkt(brightness)
-	blinkt.Setup()
-	blinkt.SetClearOnExit(true)
+	blinktDev, err = blinkt.NewDev()
+	if err != nil {
+		panic(err)
+	}
+	blinktDev.SetClearOnExit(true)
 
 	http.HandleFunc("/update_led", UpdateLed)
 

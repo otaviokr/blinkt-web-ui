@@ -2,9 +2,11 @@
 function changeColor(AreaID) {
     var obj = document.getElementById("parent_svg").contentDocument.getElementById(AreaID);
     var newColor = document.getElementById("colorpicker").value;
+    var newBright = document.getElementById("bright").value;
     obj.style.fill = newColor;
     obj.style.stroke = newColor;
     document.getElementById("input_" + AreaID).value = newColor;
+    document.getElementById("input_" + AreaID + "b").value = newBright;
 }
 
 // You have to convert the form, otherwise, the data is sent as multipart/form-data
